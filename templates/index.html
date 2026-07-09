@@ -149,12 +149,14 @@
         </div>
         <div class="field-row">
           <div class="field">
-            <label for="Income">Annual income <span class="unit">₹</span></label>
-            <input type="number" id="Income" name="Income" min="0" step="1000" placeholder="e.g. 600000" required>
+            <label for="IncomeDisplay">Annual income <span class="unit">₹</span></label>
+            <input type="text" inputmode="numeric" id="IncomeDisplay" placeholder="e.g. 6,00,000" autocomplete="off" required>
+            <input type="hidden" id="Income" name="Income">
           </div>
           <div class="field">
-            <label for="Debt">Outstanding debt <span class="unit">₹</span></label>
-            <input type="number" id="Debt" name="Debt" min="0" step="1000" placeholder="e.g. 150000" required>
+            <label for="DebtDisplay">Outstanding debt <span class="unit">₹</span></label>
+            <input type="text" inputmode="numeric" id="DebtDisplay" placeholder="e.g. 1,50,000" autocomplete="off" required>
+            <input type="hidden" id="Debt" name="Debt">
           </div>
           <div class="field field--narrow">
             <label for="CreditScore">Credit score</label>
@@ -228,6 +230,51 @@
 </main>
 
 <script>
+  function formatIndianDigits(digits) {
+    if (!digits) return '';
+    let last3 = digits.slice(-3);
+    let rest = digits.slice(0, -3);
+    if (rest) {
+      rest = rest.replace(/\B(?=(\d{2})+(?!\d))/g, ',');
+      return rest + ',' + last3;
+    }
+    return last3;
+  }
+
+  function wireCurrencyField(displayId, hiddenId) {
+    const display = document.getElementById(displayId);
+    const hidden = document.getElementById(hiddenId);
+
+    display.addEventListener('input', () => {
+      const digits = display.value.replace(/\D/g, '').slice(0, 12);
+      display.value = formatIndianDigits(digits);
+      hidden.value = digits;
+    });
+
+    display.addEventListener('blur', () => {
+      if (!hidden.value) {
+        display.setCustomValidity('Please enter an amount');
+      } else {
+        display.setCustomValidity('');
+      }
+    });
+  }
+
+  wireCurrencyField('IncomeDisplay', 'Income');
+  wireCurrencyField('DebtDisplay', 'Debt');
+
+  const form = document.querySelector('form');
+  form.addEventListener('submit', (e) => {
+    ['Income', 'Debt'].forEach((id) => {
+      const hidden = document.getElementById(id);
+      const display = document.getElementById(id + 'Display');
+      if (!hidden.value) {
+        e.preventDefault();
+        display.reportValidity();
+      }
+    });
+  });
+
   const result = document.getElementById('result');
   if (result) {
     result.scrollIntoView({ behavior: 'smooth', block: 'center' });
