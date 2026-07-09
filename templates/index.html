@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Credit Card Application — SecureBank</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar__inner">
+    <div class="brand">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2 3 6v6c0 5 3.8 8.7 9 10 5.2-1.3 9-5 9-10V6l-9-4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.5 12.2 11 14.7l4.5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <span class="brand__name">SecureBank</span>
+    </div>
+    <span class="navbar__tag">Credit Cards</span>
+  </div>
+</nav>
+
+<main class="page">
+
+  <header class="hero">
+    <h1>Apply for a credit card</h1>
+    <p>Fill in the form below and get an instant underwriting decision, powered by our approval model.</p>
+  </header>
+
+  <ol class="stepper" aria-hidden="true">
+    <li><span class="stepper__dot">1</span>Applicant</li>
+    <li><span class="stepper__dot">2</span>Household</li>
+    <li><span class="stepper__dot">3</span>Employment</li>
+    <li><span class="stepper__dot">4</span>Finances</li>
+    <li><span class="stepper__dot">5</span>Credit history</li>
+  </ol>
+
+  <div class="card">
+    <form method="POST" action="/predict">
+
+      <section class="section">
+        <div class="section__head">
+          <span class="section__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.6"/><path d="M4.5 20c1.2-3.8 4.4-6 7.5-6s6.3 2.2 7.5 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </span>
+          <h2>Applicant</h2>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="Gender">Gender</label>
+            <select id="Gender" name="Gender" required>
+              <option value="" disabled selected>Select</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+          <div class="field field--narrow">
+            <label for="Age">Age</label>
+            <input type="number" id="Age" name="Age" min="18" max="100" step="1" placeholder="e.g. 34" required>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section__head">
+          <span class="section__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4 10.5 12 4l8 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 9.5V19a1 1 0 0 0 1 1h3v-5h4v5h3a1 1 0 0 0 1-1V9.5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </span>
+          <h2>Household</h2>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="Married">Marital status</label>
+            <select id="Married" name="Married" required>
+              <option value="" disabled selected>Select</option>
+              <option value="yes">Married</option>
+              <option value="no">Not married</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="BankCustomer">Existing bank customer</label>
+            <select id="BankCustomer" name="BankCustomer" required>
+              <option value="" disabled selected>Select</option>
+              <option value="yes">Yes, existing customer</option>
+              <option value="no">No, new to bank</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="Citizenship">Citizenship</label>
+            <select id="Citizenship" name="Citizenship" required>
+              <option value="" disabled selected>Select</option>
+              <option value="indian">Indian</option>
+              <option value="nri">NRI</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section__head">
+          <span class="section__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="7.5" width="17" height="12" rx="1.6" stroke="currentColor" stroke-width="1.6"/><path d="M8.5 7.5V6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v1.5" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 12.5h17" stroke="currentColor" stroke-width="1.6"/></svg>
+          </span>
+          <h2>Employment</h2>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="EmploymentStatus">Employment status</label>
+            <select id="EmploymentStatus" name="EmploymentStatus" required>
+              <option value="" disabled selected>Select</option>
+              <option value="employed">Employed</option>
+              <option value="self-employed">Self-employed</option>
+              <option value="unemployed">Unemployed</option>
+              <option value="student">Student</option>
+              <option value="retired">Retired</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="Industry">Industry</label>
+            <select id="Industry" name="Industry" required>
+              <option value="" disabled selected>Select</option>
+              <option value="it">IT</option>
+              <option value="banking">Banking</option>
+              <option value="healthcare">Healthcare</option>
+              <option value="education">Education</option>
+              <option value="government">Government</option>
+              <option value="business">Business</option>
+              <option value="manufacturing">Manufacturing</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="field field--narrow">
+            <label for="YearsEmployed">Years employed</label>
+            <input type="number" id="YearsEmployed" name="YearsEmployed" min="0" max="60" step="0.1" placeholder="e.g. 5" required>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section__head">
+          <span class="section__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="13" rx="1.8" stroke="currentColor" stroke-width="1.6"/><path d="M3 10h18" stroke="currentColor" stroke-width="1.6"/><path d="M7 14.5h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </span>
+          <h2>Finances</h2>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="Income">Annual income <span class="unit">₹</span></label>
+            <input type="number" id="Income" name="Income" min="0" step="1000" placeholder="e.g. 600000" required>
+          </div>
+          <div class="field">
+            <label for="Debt">Outstanding debt <span class="unit">₹</span></label>
+            <input type="number" id="Debt" name="Debt" min="0" step="1000" placeholder="e.g. 150000" required>
+          </div>
+          <div class="field field--narrow">
+            <label for="CreditScore">Credit score</label>
+            <input type="number" id="CreditScore" name="CreditScore" min="300" max="800" step="1" placeholder="300–800" required>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--last">
+        <div class="section__head">
+          <span class="section__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 3 4.5 6v5.5c0 4.5 3.2 7.8 7.5 9 4.3-1.2 7.5-4.5 7.5-9V6L12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </span>
+          <h2>Credit history</h2>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="PriorDefault">Any previous default</label>
+            <select id="PriorDefault" name="PriorDefault" required>
+              <option value="" disabled selected>Select</option>
+              <option value="no">No prior default</option>
+              <option value="yes">Yes, has defaulted</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <div class="submit-row">
+        <button type="submit">
+          Submit application
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="submit-note">Reviewed instantly &mdash; no impact to your credit score</span>
+      </div>
+
+    </form>
+  </div>
+
+  {% if prediction %}
+  <div class="card result-card result-card--{{ status }}" id="result">
+    <div class="result__badge">
+      {% if status == 'approved' %}
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.12"/><path d="M7.5 12.5l3 3 6-6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      {% else %}
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.12"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      {% endif %}
+    </div>
+
+    <div class="result__body">
+      <p class="result__eyebrow">{% if status == 'approved' %}Application approved{% else %}Application declined{% endif %}</p>
+      <h2 class="result__title">{{ prediction }}</h2>
+      <p class="result__message">{{ message }}</p>
+      <span class="risk-pill risk-pill--{{ status }}">{{ risk }}</span>
+    </div>
+
+    <div class="result__confidence">
+      <svg viewBox="0 0 120 120" class="gauge">
+        <circle cx="60" cy="60" r="50" class="gauge__track"/>
+        <circle cx="60" cy="60" r="50" class="gauge__value" style="--pct: {{ confidence }}"/>
+      </svg>
+      <div class="gauge__label">
+        <span class="gauge__pct">{{ confidence }}%</span>
+        <span class="gauge__caption">confidence</span>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <p class="footnote">SecureBank is a demo underwriting experience. Decisions are generated by a machine-learning model and business rules for illustration only.</p>
+
+</main>
+
+<script>
+  const result = document.getElementById('result');
+  if (result) {
+    result.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+</script>
+
+</body>
+</html>
